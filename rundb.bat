@@ -1,0 +1,1 @@
+npx json-server --watch --port 3333 db.json
