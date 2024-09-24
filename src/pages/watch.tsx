@@ -37,10 +37,10 @@ export default function App() {
             <Text>
               Genre
             </Text>
-          <GenresNav
+{/*           <GenresNav
             selectedGenreId={selectedGenreId}
             setSelectedGenreId={setSelectedGenreId}
-          />
+          /> */}
           </Box>
           <Content
             selectedGenre={selectedGenre}
