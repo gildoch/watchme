@@ -68,12 +68,12 @@ export default function Dashboard() {
           alignItems="flex-start"
         >
           <Box p={["6","8"]} bg="gray.800" borderRadius={8} pb="4">
-            <Text>Inscritos da Semana</Text>
+            <Text>Watched this Week</Text>
             <Chart type="area" height={160} series={series} options={options} />
           </Box>
 
           <Box p={["6","8"]} bg="gray.800" borderRadius={8} pb="4">
-            <Text>adadada</Text>
+            <Text>Total Watched</Text>
             <Chart type="area" height={160} series={series} options={options} />
           </Box>
         </SimpleGrid>

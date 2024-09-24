@@ -11,7 +11,7 @@ import { useWatchlists } from "@/hooks/useWatchlists";
 import { useState } from "react";
 import Link from "next/link";
 
-type Watchlist = {
+type WatchlistProps = {
     id?:string,
     name: string,
     description: string
@@ -20,19 +20,17 @@ type Watchlist = {
 export default function SiderbarNav() {
     const [page, setPage] = useState(1)
     const {data, isLoading, isFetching, error} = useWatchlists(page)
-    console.log(data);
     
-
     return (
     <Stack spacing="12" align="flex-start">
         <NavSection title="GERAL">
             <NavLink icon={RiDashboardLine} href="/dashboard">Dashboard</NavLink>
-            <NavLink icon={RiContactsLine} href="/users">Usuarios</NavLink>
+            <NavLink icon={RiContactsLine} href="/users">User</NavLink>
         </NavSection>
 
         <NavSection title="WATCHLISTS">
             <Link href="/watchlist/create"><Button leftIcon={<RiInputMethodLine />}>Create Watchlist </Button></Link>
-            {/* {data?.watchlists.map((list:Watchlist)=>(<NavLink icon={RiInputMethodLine} href="/forms">{list.name}</NavLink>))} */}
+            {data?.watchlists.map((list:WatchlistProps)=>(<NavLink key={list.id} icon={RiInputMethodLine} href={`/watchlist/${list.id}`}>{list.name}</NavLink>))}
             <NavLink icon={RiInputMethodLine} href="/watchlist">My Lists</NavLink>
         </NavSection>
     </Stack>)

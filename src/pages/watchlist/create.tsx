@@ -25,7 +25,7 @@ import * as yup from "yup";
 
 type CreateWatchlistFormData = {
   name: string;
-  description: string;
+  description?: string;
 };
 
 const CreateWatchlistFormSchema = yup.object().shape({
@@ -46,10 +46,9 @@ export default function CreateWatchlist() {
 
   const createWatchlist = useMutation({
     mutationFn: async (watchlist: CreateWatchlistFormData) => {
-      const response = await api.post("/api/watchlist", {
+      const response = await api.post("/api/watchlists", {
         watchlist: {
           ...watchlist,
-          created_at: new Date(),
         },
       });
 
@@ -65,7 +64,6 @@ export default function CreateWatchlist() {
   ) => {
     await createWatchlist.mutateAsync(values);
     router.push("/watchlist");
-    console.log(values);
     
   };
 

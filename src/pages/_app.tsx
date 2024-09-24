@@ -6,18 +6,21 @@ import { SidebarDrawerProvider } from "@/contexts/SidebarDrawerContext";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { queryClient } from "@/services/queryClient";
 import { makeServer } from "@/services/mirage";
-
+import { AuthProvider } from "@/contexts/AuthContext";
 
 
 if (process.env.NODE_ENV === "development") {
   makeServer();
 }
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <SidebarDrawerProvider>
         <QueryClientProvider client={queryClient}>
+        <AuthProvider>
           <Component {...pageProps} />
+          </AuthProvider>
           <ReactQueryDevtools />
         </QueryClientProvider>
       </SidebarDrawerProvider>

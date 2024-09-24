@@ -30,10 +30,7 @@ export function GenresNav({
     setSelectedGenreId(id);
   }
 
-  console.log("A",genres);
-  
-
-  return (
+    return (
     <HStack alignItems="center" w="100%" p={2}>
       {genres.map((genre) => (
         <Button

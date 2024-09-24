@@ -86,7 +86,7 @@ export default function EditWatchlist() {
           </VStack>
           <Box pt={6} >
             <Text>Movies</Text>
-            {data?.movies.map((movie:Movie)=>(<WatchlistMovieDeleteCard poster={movie.Poster} title={movie.Title}  />))}
+            {data?.movies.map((movie:Movie)=>(<WatchlistMovieDeleteCard key={movie.imdbID} poster={movie.Poster} title={movie.Title}  />))}
             
           </Box>
           <Pagination totalCountOfRegisters={24} currentPage={page} onPageChange={setPage} />

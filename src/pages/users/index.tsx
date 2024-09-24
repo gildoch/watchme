@@ -44,8 +44,7 @@ export default function UserList() {
   })
 
   const { data, isFetching, isLoading, error } = useUsers(page)
-
-
+  
   async function handlePreFetchUser(userId: string) {
     await queryClient.prefetchQuery({
       queryKey: ["users", userId], queryFn: async () => {

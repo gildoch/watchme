@@ -5,7 +5,8 @@ import { RiSearchLine } from "react-icons/ri";
 
 export default function SearchBox() {
   const [search, setSearch] = useState("")
-
+  console.log(search);
+  
   return (
     <Flex
       as="label"

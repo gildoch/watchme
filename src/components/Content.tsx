@@ -24,18 +24,18 @@ type ContentProps = {
 };
 
 export function Content({ selectedGenre, selectedGenreId }: ContentProps) {
-  
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
-  const {data, isFetching, isLoading, error} = useMovies(page)
-    
+  const { data, isFetching, isLoading, error } = useMovies(page);
+
   async function handlePreFetchMovie(imdbID: string) {
     await queryClient.prefetchQuery({
-      queryKey: ["movies", imdbID], queryFn: async () => {
-        const { data } = await api.get(`/api/movies/${imdbID}`)
-        return data
-      }
-    })
+      queryKey: ["movies", imdbID],
+      queryFn: async () => {
+        const { data } = await api.get(`/api/movies/${imdbID}`);
+        return data;
+      },
+    });
   }
 
   return (
@@ -53,17 +53,17 @@ export function Content({ selectedGenre, selectedGenreId }: ContentProps) {
         </Box>
       </Box>
 
-      <Box as="main" w="100%" mt={6} >
-        <Grid templateColumns="repeat(4, 1fr)" gap={6} >
-          {data?.movies.map((movie:Movie) => (
-            <GridItem >
-            <MovieCard
-              key={movie.imdbID}
-              title={movie.Title}
-              poster={movie.Poster}
-              runtime={movie.Runtime}
-              rating={movie.Ratings[0].Value}
-            />
+      <Box as="main" w="100%" mt={6}>
+        <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+          {data?.movies.map((movie: Movie) => (
+            <GridItem key={movie.imdbID}>
+              <MovieCard
+                imdbID={movie.imdbID}
+                title={movie.Title}
+                poster={movie.Poster}
+                runtime={movie.Runtime}
+                rating={movie.Ratings[0].Value}
+              />
             </GridItem>
           ))}
         </Grid>
