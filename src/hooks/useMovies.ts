@@ -14,14 +14,19 @@ type Movie = {
 
 
 type GetMoviesResponse = {
-    totalCount:number;
-    movies:Movie[]
+  totalCount: number;
+  movies: Movie[]
 }
+
+console.log(process.env.NEXT_PUBLIC_OMDB);
+
 export async function getMovies(page: number): Promise<GetMoviesResponse> {
   const { data, headers } = await api.get("/api/movies", {
     params: {
       page,
     },
+
+
   });
 
   const totalCount = Number(headers["x-total-count"]);

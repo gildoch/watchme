@@ -81,7 +81,7 @@ export function makeServer() {
       this.timing = 750;
 
       // User Endpoints
-      this.get("users", function (schema, request) {
+      this.get("users",  function (schema, request) {
         const { page = 1, per_page = 10 } = request.queryParams;
 
         const total = schema.all("user").length;
@@ -96,17 +96,18 @@ export function makeServer() {
 
         return new Response(200, { "x-total-count": String(total) }, { users });
       }),
-        this.get('users/:id')
+
+      this.get('users/:id')
       this.post("users");
 
       // Genre Endpoints
-      this.get('genres', (schema, request) => {
+      this.get('genres', function (schema, request)  {
         const total = genres.length;
         return new Response(200, { "x-total-count": String(total) }, { genres });
       })
 
       // Movie Endpoints
-      this.get('movies', (schema, request) => {
+      this.get('movies', function (schema, request) {
         const { page = 1, per_page = 10 } = request.queryParams;
 
         const total = dbmovies.length;
@@ -121,11 +122,20 @@ export function makeServer() {
 
         return new Response(200, { "x-total-count": String(total) }, { movies });
       })
-      this.get('movies/:id')
+
+      this.get('movies/:id',function(schema, request){
+        const {id} = request.params
+        const movie = dbmovies.filter(movie => movie.imdbID ===  id)
+        const total = movie.length;
+
+        console.log("XXX", movie);
+        
+        return new Response(200, { "x-total-count": String(total) }, { movie });
+      })
       this.post("movies");
 
       // Watchlist Endpoints
-      this.get("watchlists", (schema, request) => {
+      this.get("watchlists", function (schema, request) {
         const { page = 1, per_page = 10 } = request.queryParams;
 
         const total = schema.all("watchlist").length;
@@ -133,12 +143,30 @@ export function makeServer() {
         const startPage = (Number(page) - 1) * Number(per_page);
         const endPage = startPage + Number(per_page);
 
-        const watchlists = schema.all("watchlist")
-
+        const watchlists = this.serialize(schema.all("watchlist")).watchlists.slice(
+          startPage,
+          endPage
+        );  
+       
         return new Response(200, { "x-total-count": String(total) }, { watchlists });
       });
-      this.get('watchlists/:id')
+
+      this.get('watchlists/:id',function(schema, request){
+        const {id} = request.params
+        const watchlist = this.serialize(schema.all("watchlist")).watchlists.filter((watchlist:Watchlist) => watchlist.id ===  id)
+        const total = watchlist.length;
+
+        console.log("XXX", watchlist);
+        
+        return new Response(200, { "x-total-count": String(total) }, { watchlist });
+      })
       this.post("watchlists");
+      this.put("/watchlists/:id", function (schema, request){
+        let newAttrs = JSON.parse(request.requestBody);
+        const {id} = request.params
+        let watchlist = this.serialize(schema.all("watchlist")).watchlists.filter((watchlist:Watchlist) => watchlist.id ===  id)
+        return watchlist.u
+      })
 
       this.namespace = "";
       this.passthrough();
